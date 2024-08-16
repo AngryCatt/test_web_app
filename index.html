@@ -9,6 +9,7 @@
     <h1>Кайф змейки: <span id="snakeCaif">0</span></h1>
     <button onclick='permission();'>Request orientation permission</button>
     <script>
+        let accelerationY =0;
         function permission () {
             if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
                 // (optional) Do something before API request prompt.
@@ -28,18 +29,19 @@
         }
         if (window.DeviceMotionEvent) {
             window.addEventListener('devicemotion', function(event) {
-                let accelerationY = Math.abs(event.acceleration.y);                
-                let text = "( -_- )";
+                accelerationY = Math.abs(event.acceleration.y);                
+            });
 
-                if(accelerationY > 2){
+            const intervalId = setInterval(() => {
+                let text = "( -_- )";
+                if(accelerationY > 3){
                     text = "(>///-///<)";
-                }else if(accelerationY > 1){
+                }else if(accelerationY > 1.5 ){
                     text = "(˶ᵔ ᵕ ᵔ˶)";
                 }
 
                 document.getElementById('snakeCaif').textContent = text;
-                
-            });
+            }, 1000);
         } else {
             alert("Ваше устройство не поддерживает DeviceMotionEvent.");
         }
