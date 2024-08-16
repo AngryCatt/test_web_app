@@ -10,18 +10,35 @@
     <p>Ускорение по оси X: <span id="accelerationX">0</span></p>
     <p>Ускорение по оси Y: <span id="accelerationY">0</span></p>
     <p>Ускорение по оси Z: <span id="accelerationZ">0</span></p>
-
+<button onclick='permission();'>Request orientation permission</button>
     <script>
-        // Проверяем поддержку DeviceMotionEvent
+function permission () {
+    if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
+        // (optional) Do something before API request prompt.
+        DeviceMotionEvent.requestPermission()
+            .then( response => {
+            // (optional) Do something after API prompt dismissed.
+            if ( response == "granted" ) {
+                window.addEventListener( "devicemotion", (e) => {
+                    // do something for 'e' here.
+                })
+            }
+        })
+            .catch( console.error )
+    } else {
+        alert( "DeviceMotionEvent is not defined" );
+    }
+}
+
         if (window.DeviceMotionEvent) {
             window.addEventListener('devicemotion', function(event) {
                 // Получаем данные об ускорении
                 let acceleration = event.acceleration;
 
                 // Обновляем значения на странице
-                document.getElementById('accelerationX').textContent = acceleration.x.toFixed(2);
-                document.getElementById('accelerationY').textContent = acceleration.y.toFixed(2);
-                document.getElementById('accelerationZ').textContent = acceleration.z.toFixed(2);
+                document.getElementById('accelerationX').textContent = acceleration.x;
+                document.getElementById('accelerationY').textContent = acceleration.y;
+                document.getElementById('accelerationZ').textContent = acceleration.z;
             });
         } else {
             alert("Ваше устройство не поддерживает DeviceMotionEvent.");
