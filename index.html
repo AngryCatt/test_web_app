@@ -31,10 +31,10 @@
                 let accelerationY = Math.abs(event.acceleration.y);                
                 let text = "( -_- )";
 
-                if(accelerationY > 1){
-                    text = "(˶ᵔ ᵕ ᵔ˶)";
-                }else if(accelerationY > 2){
+                if(accelerationY > 2){
                     text = "(>///-///<)";
+                }else if(accelerationY > 1){
+                    text = "(˶ᵔ ᵕ ᵔ˶)";
                 }
 
                 document.getElementById('snakeCaif').textContent = text;
