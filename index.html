@@ -11,8 +11,8 @@
     <button onclick='permission();'>Request orientation permission</button>
     <script>
         function permission () {
-            if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
-                // (optional) Do something before API request prompt.
+            if ( typeof( DeviceMotionEvent ) !== "undefined" ) {
+                if(typeof( DeviceMotionEvent.requestPermission ) === "function"){
                 DeviceMotionEvent.requestPermission()
                     .then( response => {
                     // (optional) Do something after API prompt dismissed.
@@ -20,10 +20,12 @@
                       window.location.pathname = '/test_web_app/game.html';
                     }
                 })
-                    .catch( console.error )
+                    .catch( console.error );
+                }else{
+                  window.location.pathname = '/test_web_app/game.html';
+                }
             } else {
                 alert( "DeviceMotionEvent is not defined" );
-                window.location.pathname = '/test_web_app/game.html';
             }
         }
     </script>
