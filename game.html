@@ -37,7 +37,7 @@
       }).then((unityInstance) => {
         if (typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
           window.addEventListener('devicemotion', function(event) {
-            unityInstance.SendMessage('Snake', 'SetPower', event.acceleration.y);
+            unityInstance.SendMessage('Snake', 'SetPower', Math.abs(event.acceleration.y));
           });
         }
 
