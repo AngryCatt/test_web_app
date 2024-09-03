@@ -103,13 +103,11 @@
       var script = document.createElement("script");
       script.src = loaderUrl;
 
-      let mainInstance;
-
       script.onload = () => {
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
-          mainInstance = unityInstance;
+          window.game = unitInstance;
           loadingBar.style.display = "none";
           fullscreenButton.onclick = () => {
             unityInstance.SetFullscreen(1);
@@ -122,20 +120,18 @@
 
       let accelerationY = 0;
 
-      if (window.DeviceMotionEvent) {
+      if (typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
           window.addEventListener('devicemotion', function(event) {
               accelerationY = Math.abs(event.acceleration.y);                
           });
 
           const intervalId = setInterval(() => {
-            mainInstance.SendMessage('UI', 'ShowPower', accelerationY.toString());
+            window.game.SendMessage('UI', 'ShowPower', accelerationY.toString());
           }, 1000);
-      } else {
-          alert("Ваше устройство не поддерживает DeviceMotionEvent.");
       }
 
       function send(){
-        mainInstance.SendMessage('UI', 'ShowPower', accelerationY.toString());
+        window.game.SendMessage('UI', 'ShowPower', accelerationY.toString());
       }
     </script>
   </body>
