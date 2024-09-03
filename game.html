@@ -35,18 +35,16 @@
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
       }).then((unityInstance) => {
-        window.setAcceleration = (power) => {
-          unityInstance.SendMessage('Snake', 'SetPower', power);
-        };
+        if (typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
+          window.addEventListener('devicemotion', function(event) {
+            unityInstance.SendMessage('Snake', 'SetPower', event.acceleration.y);
+          });
+        }
+
       }).catch((message) => {
         alert(message);
       });
 
-      if (typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
-        window.addEventListener('devicemotion', function(event) {
-          window.setAcceleration(event.acceleration.y);
-        });
-      }
     </script>
   </body>
 </html>
