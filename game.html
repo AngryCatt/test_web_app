@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
   <body>
+    <button onclick='send();'>send</button>
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width=960 height=600></canvas>
       <div id="unity-loading-bar">
@@ -127,6 +128,10 @@
           }, 1000);
       } else {
           alert("Ваше устройство не поддерживает DeviceMotionEvent.");
+      }
+
+      function send(){
+        unityInstance.SendMessage('UI', 'ShowPower', accelerationY.toString());
       }
     </script>
   </body>
