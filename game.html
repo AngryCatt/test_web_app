@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
   <body>
-    <button onclick='send();'>send</button>
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width=960 height=600></canvas>
       <div id="unity-loading-bar">
@@ -107,8 +106,12 @@
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
-          window.game = unitInstance;
           loadingBar.style.display = "none";
+
+          window.setAcceleration = (power) => {
+            unityInstance.SendMessage('UI', 'ShowPower', power);
+          };
+
           fullscreenButton.onclick = () => {
             unityInstance.SetFullscreen(1);
           };
@@ -124,14 +127,9 @@
           window.addEventListener('devicemotion', function(event) {
               accelerationY = Math.abs(event.acceleration.y);                
           });
-
           const intervalId = setInterval(() => {
-            window.game.SendMessage('UI', 'ShowPower', accelerationY.toString());
+            window.setAcceleration(accelerationY.toString());
           }, 1000);
-      }
-
-      function send(){
-        window.game.SendMessage('UI', 'ShowPower', "5");
       }
     </script>
   </body>
