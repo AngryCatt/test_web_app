@@ -8,23 +8,25 @@
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
   <body>
+    <button onclick='window.getPermission();'>Request orientation permission</button>
     <script>
-            if ( typeof( DeviceMotionEvent ) !== "undefined" ) {
-                if(typeof( DeviceMotionEvent.requestPermission ) === "function"){
+        if ( typeof( DeviceMotionEvent ) !== "undefined" ) {
+            if(typeof( DeviceMotionEvent.requestPermission ) !== "function"){
+              window.location.pathname = '/test_web_app/game.html';
+            }else{
+              window.getPermission = () => {
                 DeviceMotionEvent.requestPermission()
-                    .then( response => {
-                    // (optional) Do something after API prompt dismissed.
-                    if ( response == "granted" ) {
-                      window.location.pathname = '/test_web_app/game.html';
-                    }
-                })
-                    .catch( console.error );
-                }else{
+                .then( response => {
+                // (optional) Do something after API prompt dismissed.
+                if ( response == "granted" ) {
                   window.location.pathname = '/test_web_app/game.html';
                 }
-            } else {
-                alert( "DeviceMotionEvent is not defined" );
+                }).catch(console.error);
+              }
             }
+        } else {
+            alert( "DeviceMotionEvent is not defined" );
+        }
         
     </script>
   </body>
