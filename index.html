@@ -15,7 +15,7 @@
             .then( response => {
             // (optional) Do something after API prompt dismissed.
             if ( response == "granted" ) {
-              alert('Permission not granted');
+              window.location.pathname = '/test_web_app/game.html';
             }
         }).catch( console.error );
       }
