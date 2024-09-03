@@ -36,14 +36,8 @@
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
       }).then((unityInstance) => {
         if (typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
-          let acceleration = 0;
-          
-          const intervalId = setInterval(() => {
-            unityInstance.SendMessage('SnakeObject', 'Shake', acceleration);
-          }, 20);
-
           window.addEventListener('devicemotion', function(event) {
-            acceleration = event.acceleration.y;
+            unityInstance.SendMessage('Snake', 'SetPower', Math.abs(event.acceleration.y));
           });
         }
 
