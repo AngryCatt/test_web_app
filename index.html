@@ -11,7 +11,6 @@
     <button onclick='window.getPermission();'>Request orientation permission</button>
     <h1 id="myHeader">Старый текст заголовка</h1>
     <script>
-      console.log(event.acceleration);
       if (typeof( DeviceMotionEvent ) !== "undefined" ) {
           if(typeof( DeviceMotionEvent.requestPermission ) == "function"){
             window.getPermission = () => {
