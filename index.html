@@ -15,7 +15,7 @@
               DeviceMotionEvent.requestPermission().then( response => {
                 if ( response == "granted" ) {
                   window.addEventListener('devicemotion', function (event) {
-                    document.getElementById("myHeader").textContent = event.acceleration;
+                    document.getElementById("myHeader").textContent = JSON.stringify(event.acceleration);
                   });
                 }
               }).catch(console.error);
