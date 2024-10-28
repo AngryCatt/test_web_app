@@ -6,32 +6,27 @@
     <title>Unity WebGL Player | ssk</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
   </head>
   <body>
     <button onclick='window.getPermission();'>Request orientation permission</button>
     <h1 id="myHeader">Старый текст заголовка</h1>
     <script>
       console.log(event.acceleration);
-
-        Telegram.WebApp.ready();
-        Telegram.WebApp.expand();
-
-        if ( typeof( DeviceMotionEvent ) !== "undefined" ) {
-            if(typeof( DeviceMotionEvent.requestPermission ) == "function"){
-              window.getPermission = () => {
-                DeviceMotionEvent.requestPermission().then( response => {
-                  if ( response == "granted" ) {
-                    window.addEventListener('devicemotion', function (event) {
-                      document.getElementById("myHeader").textContent = event.acceleration;
-                    });
-                  }
-                }).catch(console.error);
-              }            
-            }
-        } else {
-            alert( "DeviceMotionEvent is not defined" );
-        }
+      if (typeof( DeviceMotionEvent ) !== "undefined" ) {
+          if(typeof( DeviceMotionEvent.requestPermission ) == "function"){
+            window.getPermission = () => {
+              DeviceMotionEvent.requestPermission().then( response => {
+                if ( response == "granted" ) {
+                  window.addEventListener('devicemotion', function (event) {
+                    document.getElementById("myHeader").textContent = event.acceleration;
+                  });
+                }
+              }).catch(console.error);
+            }            
+          }
+      } else {
+          alert( "DeviceMotionEvent is not defined" );
+      }
         
     </script>
   </body>
